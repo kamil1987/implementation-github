@@ -1,0 +1,36 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    static int solve(int n, int[] s, int d, int m){
+        int n_solutions = 0;
+        
+        for(int s_i=0; s_i <= n - m; s_i++){
+            int sum =0;
+                for(int internal_i =0 ; internal_i < m; internal_i++){
+                    sum += s[internal_i + s_i];
+                }
+                if(sum == d) n_solutions++;
+
+        }
+        
+        return n_solutions;
+    }
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int n = in.nextInt();
+        int[] s = new int[n];
+        for(int s_i=0; s_i < n; s_i++){
+            s[s_i] = in.nextInt();
+        }
+        int d = in.nextInt();
+        int m = in.nextInt();
+        int result = solve(n, s, d, m);
+        System.out.println(result);
+    }
+}

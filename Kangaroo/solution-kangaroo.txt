@@ -1,0 +1,46 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    static String kangaroo(int x1, int v1, int x2, int v2) {
+        int sum1 = x1 + v1;
+        int sum2 = x2 + v2;
+        int firstKangarooJump = sum1 + v1 ;
+        int secondKangarooJump = sum2 + v2 ;
+        int firstDifferenceInJumps = sum1 - sum2;
+        int secondDifferenceInJumps = firstKangarooJump - secondKangarooJump;
+        
+        if(firstDifferenceInJumps == secondDifferenceInJumps){
+             return "NO";
+        }else {
+            int prevSum1 = sum1;
+            int prevSum2 = sum2;
+           while(sum1 != sum2){
+               sum1 +=v1;
+               sum2 +=v2;
+               if( (sum2 - sum1) > (prevSum2 - prevSum1)){
+                   return "NO";
+               }
+               prevSum1 = sum1;   
+               prevSum2 = sum2;
+           
+           }
+            return "YES";
+                  }
+                  }
+                  
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int x1 = in.nextInt();
+        int v1 = in.nextInt();
+        int x2 = in.nextInt();
+        int v2 = in.nextInt();
+        String result = kangaroo(x1, v1, x2, v2);
+        System.out.println(result);
+    }
+}

@@ -1,0 +1,122 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
+        
+            Scanner scanner = new Scanner (System.in);
+            int m = scanner.nextInt();
+            int n = scanner.nextInt();
+            int r = scanner.nextInt();
+            int [][]matrix = new int[m][n];
+            fillMatrix(matrix, scanner, m, n);
+            //printMatrix(matrix);
+            int numberOfLayers = countLayers (m,n);
+            rotateRtimes(matrix,numberOfLayers, r, m, n);
+            printMatrix(matrix, m, n);
+        
+        
+        }
+        
+        public static void fillMatrix(int [][] matrix, Scanner scanner, int m, int n ){
+            for(int m_i = 0; m_i < m; m_i++){
+                for(int n_i = 0; n_i < n; n_i++){
+                    matrix[m_i][n_i] = scanner.nextInt();
+                 }
+            }
+        }
+        
+        public static void printMatrix(int [][] matrix, int m, int n){
+            for(int m_i = 0; m_i < m; m_i++){
+                for(int n_i = 0; n_i < n; n_i++){
+                    System.out.print(matrix[m_i][n_i] + " ");
+                 }
+                System.out.print('\n');
+            }
+        }
+
+        
+        public static void rotateRtimes(int [][] matrix, int numberOfLayers, int r, int m, int n ){
+            int ext_j = 0;
+             //ext_i = 0;
+      
+               //if restore this 'for', remove lines with comment 'remove' in rotateOnce method
+               for(int ext_i = 0; ext_i < numberOfLayers; ext_i++){
+                     ext_j = ext_i; 
+                     rotateOnce(matrix, ext_i, ext_j, numberOfLayers, m, n, r);
+              }
+           
+          
+             
+        }
+    
+        public static void rotateOnce(int [][] matrix,int ext_i,  int ext_j, int numberOfLayers, int m, int n, int r){
+           // if(ext_i != numberOfLayers){ //remove
+             //   rotateOnce(matrix,ext_i+1, ext_j+1, numberOfLayers); //remove
+           
+            int peremiter = (2*(m - ext_i*2) + 2*(n - ext_j*2) -4);
+           
+               int factualNumberOfMoves = r % peremiter ;
+               moveElements(factualNumberOfMoves,ext_i, ext_j, m, n, matrix );
+       
+           
+            
+            
+         }
+           // }//remove
+       
+
+        public static void moveElements(int factualNumberOfMoves, int ext_i,int ext_j,int m, int n, int[][]matrix  ){
+            for(int r_i = 0; r_i < factualNumberOfMoves; r_i++){
+                int prev = 0;
+                int actual = 0;
+                int i = 0;
+                int j = 0;
+                for(i = ext_i; i < m - ext_i; i++){
+                    actual = matrix[i][ext_j];
+                    matrix[i][ext_j] = prev;
+                    prev = actual;
+                 }
+                i = matrix.length - (ext_i+1) ;
+                for( j = ext_j+1; j < n - ext_j; j++){
+
+                    actual = matrix[i][j];
+                    matrix[i][j] = prev;
+                    prev = actual;
+                 }
+                 j = n - (ext_j+1);
+                 for( i=i-1 ; i >= ext_i; i--){
+                    actual = matrix[i][j];
+                    matrix[i][j] = prev;
+                    prev = actual;
+                 }   
+                 i = ext_i;
+                 for( j = j-1 ; j >= ext_j; j--){ 
+                    actual = matrix[i][j];
+                    matrix[i][j] = prev;
+                    prev = actual;
+                 } 
+          }
+        }
+
+        public static boolean comparison(int m, int n){
+            if(m <= n) return true;
+            else return false;
+        }
+    
+        public static int countLayers( int m, int n){
+            double nOfLayers = 0.0;
+            if(comparison(m,n)){
+                nOfLayers = Math.ceil(m/2.0);  
+                return (int)nOfLayers;
+            }else{
+                  nOfLayers = Math.ceil(n/2.0);  
+                return (int)nOfLayers;
+            }   
+        }      
+}

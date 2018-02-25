@@ -1,0 +1,46 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    static int[] solve(int[] grades){
+        int[] roundedGrades = new int[grades.length];
+        
+       for(int grades_i=0; grades_i < grades.length ; grades_i++){
+            int closestBigger = giveClosestBiggerNumber(grades[grades_i]);
+            if(closestBigger >= grades[grades_i]){
+                int difference = closestBigger - grades[grades_i] ;
+                if(difference < 3 && grades[grades_i] >= 38){
+                    roundedGrades[grades_i] = closestBigger;
+                }else{
+                    roundedGrades[grades_i] = grades[grades_i];
+                }
+            }
+        }
+        return roundedGrades;
+    }
+    
+    static int giveClosestBiggerNumber (int grade){
+        int numberOfFives = (int)Math.ceil(grade / 5.0 );
+        return numberOfFives * 5;
+    }
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int n = in.nextInt();
+        int[] grades = new int[n];
+        for(int grades_i=0; grades_i < n; grades_i++){
+            grades[grades_i] = in.nextInt();
+        }
+        int[] result = solve(grades);
+        for (int i = 0; i < result.length; i++) {
+            System.out.print(result[i] + (i != result.length - 1 ? "\n" : ""));
+        }
+        System.out.println("");
+        
+
+    }
+}
